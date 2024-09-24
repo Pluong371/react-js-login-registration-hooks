@@ -1,21 +1,36 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/test/";
+const API_URL = "http://192.168.102.34:8000";
 
 const getPublicContent = () => {
   return axios.get(API_URL + "all");
 };
 
 const getUserBoard = () => {
-  return axios.get(API_URL + "user");
+  const user = JSON.parse(localStorage.getItem("user"));
+  return axios.get(API_URL + "user", {
+    headers: {
+      Authorization: `Bearer ${user.accessToken}`,
+    },
+  });
 };
 
 const getModeratorBoard = () => {
-  return axios.get(API_URL + "mod");
+  const user = JSON.parse(localStorage.getItem("user"));
+  return axios.get(API_URL + "mod", {
+    headers: {
+      Authorization: `Bearer ${user.accessToken}`,
+    },
+  });
 };
 
 const getAdminBoard = () => {
-  return axios.get(API_URL + "admin");
+  const user = JSON.parse(localStorage.getItem("user"));
+  return axios.get(API_URL + "admin", {
+    headers: {
+      Authorization: `Bearer ${user.accessToken}`,
+    },
+  });
 };
 
 const UserService = {
@@ -23,6 +38,6 @@ const UserService = {
   getUserBoard,
   getModeratorBoard,
   getAdminBoard,
-}
+};
 
 export default UserService;
